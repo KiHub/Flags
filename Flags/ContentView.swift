@@ -11,7 +11,7 @@ struct ContentView: View {
     
     @State private var countries = ["Argentina", "Bangladesh", "Brazil", "Canada", "Germany", "Greece", "Russia", "Sweden", "UK", "USA"].shuffled()
     @State private var correctAnswer = Int.random(in: 0...2)
-    @State private var score = 0
+    @State private var score = UserDefaults.standard.integer(forKey: "Score")
     @State private var showingScore = false
     @State private var scoreTitle = ""
     
@@ -71,10 +71,12 @@ struct ContentView: View {
         if number == correctAnswer {
             scoreTitle = "Correct✌️"
             score += 1
+            UserDefaults.standard.set(score, forKey: "Score")
         } else {
             scoreTitle = "No, It's \(countries[number]) flag"
             if score > 0 {
             score -= 1
+                UserDefaults.standard.set(score, forKey: "Score")
             }
         }
     }
